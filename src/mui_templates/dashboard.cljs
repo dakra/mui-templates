@@ -94,13 +94,6 @@
 
 ;;; Components
 
-(defn copyright []
-  [:> Typography {:variant "body2" :color "textSecondary" :align "center"}
-   "Copyright ©"
-   [:> Link {:color "inherit" :href "https://material-ui.com"}
-    "Your Website"]
-   (.getFullYear (js/Date.))])
-
 (defn list-item [{:keys [selected route-name text icon]}]
   [:> mui/ListItem {:button true
                     :selected selected
@@ -162,12 +155,10 @@
           ]
          [:main {:class (.-content classes)}
           [:div {:class (.-appBarSpacer classes)}]
-          [:> Container {:max-width "lg" :class (.-container classes)}
-           (when current-route
-             ;; [:> (with-dashboard-styles (reagent/reactify-component (-> current-route :data :view)))]
-             [(-> current-route :data :view) {:classes classes}])
-           [:> Box {:pt 4}
-            [copyright]]]]]))))
+          (when current-route
+            ;; [:> (with-dashboard-styles (reagent/reactify-component (-> current-route :data :view)))]
+            [(-> current-route :data :view) {:classes classes}])
+          ]]))))
 
 (defn page [{:keys [router current-route]}]
   [:> (with-dashboard-styles

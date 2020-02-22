@@ -2,11 +2,13 @@
   "dependencies": {
     "@material-ui/core": "^4.9.3",
     "@material-ui/icons": "^4.9.1",
+    "core-js": "^3.6.4",
     "create-react-class": "^15.6.3",
     "highlight.js": "9.15.10",
     "react": "16.9.0",
     "react-dom": "16.9.0",
-    "react-highlight.js": "1.0.7"
+    "react-highlight.js": "1.0.7",
+    "recharts": "^2.0.0-beta.1"
   },
   "devDependencies": {
     "shadow-cljs": "^2.8.83"

@@ -21,7 +21,46 @@
     (println "dev mode")))
 
 ;;; DB
-(def default-db {})
+(def default-db
+  {:dashboard/orders [{:id 0
+                       :date "16 Mar, 2019"
+                       :name "Elvis Presley"
+                       :ship-to "Tupelo, MS"
+                       :payment-method "VISA ⠀•••• 3719"
+                       :amount 312.44}
+                      {:id 1
+                       :date "16 Mar, 2019"
+                       :name "Paul McCartney"
+                       :ship-to "London, UK"
+                       :payment-method "VISA ⠀•••• 2574"
+                       :amount 866.99}
+                      {:id 2
+                       :date "16 Mar, 2019"
+                       :name "Tom Scholz"
+                       :ship-to "Boston, MA"
+                       :payment-method "MC ⠀•••• 1253"
+                       :amount 100.81}
+                      {:id 3
+                       :date "16 Mar, 2019"
+                       :name "Michael Jackson"
+                       :ship-to "Gary, IN"
+                       :payment-method "AMEX ⠀•••• 2000"
+                       :amount 654.39}
+                      {:id 4
+                       :date "15 Mar, 2019"
+                       :name "Bruce Springsteen"
+                       :ship-to "Long Branch, NJ"
+                       :payment-method "VISA ⠀•••• 5919"
+                       :amount 212.79}]
+   :dashboard/chart-data [{:time "00:00" :amount 0}
+                          {:time "03:00" :amount 300}
+                          {:time "06:00" :amount 600}
+                          {:time "09:00" :amount 800}
+                          {:time "12:00" :amount 1500}
+                          {:time "15:00" :amount 2000}
+                          {:time "18:00" :amount 2400}
+                          {:time "21:00" :amount 2400}
+                          {:time "24:00" :amount nil}]})
 
 ;;; Events
 (rf/reg-event-db
