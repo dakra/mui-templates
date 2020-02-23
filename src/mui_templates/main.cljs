@@ -13,6 +13,7 @@
 
 
 ;;; Config
+
 (def debug?
   ^boolean goog.DEBUG)
 
@@ -21,6 +22,7 @@
     (println "dev mode")))
 
 ;;; DB
+
 (def default-db
   {:dashboard/orders [{:id 0
                        :date "16 Mar, 2019"
@@ -62,13 +64,16 @@
                           {:time "21:00" :amount 2400}
                           {:time "24:00" :amount nil}]})
 
+
 ;;; Events
+
 (rf/reg-event-db
- ::initialize-db
+ :initialize-db
  (fn-traced [_ _]
    default-db))
 
 ;;; Subs
+
 (rf/reg-sub
  :db
  (fn [db]
@@ -76,6 +81,7 @@
 
 
 ;;; Styles
+
 (def custom-theme (createMuiTheme (clj->js {:palette {:type "light"}
                                             :status {:danger "red"}})))
 
@@ -87,6 +93,7 @@
      [dashboard/page {:router router :current-route current-route}]]))
 
 ;;; Core
+
 (defn ^:dev/after-load mount-root []
   (rf/clear-subscription-cache!)
   (routes/init-routes!)
@@ -94,6 +101,6 @@
                   (.getElementById js/document "app")))
 
 (defn init! []
-  (rf/dispatch-sync [::initialize-db])
+  (rf/dispatch-sync [:initialize-db])
   (dev-setup)
   (mount-root))

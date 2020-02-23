@@ -2,6 +2,7 @@
   (:require
    [reagent.core :as reagent]
    [re-frame.core :as rf]
+   [day8.re-frame.tracing :refer-macros [fn-traced]]
    ["recharts" :as recharts]
    ["@material-ui/core" :refer [Container Grid Paper] :as mui]))
 
@@ -16,6 +17,19 @@
  (fn [db]
    (:dashboard/chart-data db)))
 
+;;; Events
+
+(rf/reg-event-db
+ :dashboard/randomize-chart
+ ;; XXX: `fn-traced` doesn't support `for` or `map` yet. See https://github.com/day8/re-frame-debux#status
+ ;; With fn-traced I have to define 2 :let blocks in `for` or it doesn't work
+ (fn [db _]
+   (update db :dashboard/chart-data (fn [data]
+                                      (for [d data
+                                            :let [time (:time d)
+                                                  amount (rand-int 3000)]]
+                                        {:time time :amount amount})))))
+
 (defn copyright []
   [:> mui/Typography {:variant "body2" :color "textSecondary" :align "center"}
    "Copyright ©"
@@ -27,13 +41,21 @@
 (defn chart [{:keys [classes]}]
   (let [chart-data (rf/subscribe [:dashboard/chart-data])]
     [:<>
-     [:> mui/Typography {:component "h2" :variant "h6" :color "primary" :gutter-bottom true}
-      "Today"]
+     [:> Grid {:justify "space-between" :container true}
+      [:> Grid {:item true}
+       [:> mui/Typography {:component "h2" :variant "h6" :color "primary" :gutter-bottom true}
+        "Today"]]
+      [:> Grid {:item true}
+       [:> mui/Button {:color "primary" :style {:float "right"}
+                       :on-click #(rf/dispatch [:dashboard/randomize-chart])}
+        "Randomize data"]]]
      [:> recharts/ResponsiveContainer
       [:> recharts/LineChart {:data @chart-data :margin {:top 16 :right 16 :bottom 0 :left 24}}
        [:> recharts/XAxis {:dataKey :time}]  ; :stroke (.. classes -palette -text -secondary)
-       [:> recharts/YAxis]
-       [:> recharts/Line {:type "monotone" :dataKey :amount :fill "#8884d8" :dot false}]
+       [:> recharts/YAxis
+        [:> recharts/Label {:angle 270 :position "left" :style {:text-anchor "middle"}}  ; :fill (.. classes -palette -text -primary)
+         "Sales ($)"]]
+       [:> recharts/Line {:type "monotone" :dataKey :amount :dot false}] ; :stroke (.. classes -palette -text -main)
        [:> recharts/CartesianGrid {:stroke "#ccc" :strokeDasharray "5 5"}]
        [:> recharts/Tooltip]]]]))
 
@@ -84,10 +106,9 @@
 
 (defn dashboard [{:keys [classes]}]
   [:> Container {:max-width "lg" :class (.-container classes)}
-
    [:> Grid {:container true :spacing 3}
     [:> Grid {:item true :xs 12 :md 8 :lg 9}
-     [:> Paper {:class [(.-fixedHeight classes)]}
+     [:> Paper {:class [(.-paper classes) (.-fixedHeight classes)]}
       [chart {:classes classes}]]]
     [:> Grid {:item true :xs 12 :md 4 :lg 3}
      [:> Paper {:class [(.-paper classes) (.-fixedHeight classes)]}
