@@ -6,6 +6,7 @@
    [reitit.frontend.easy :as rfe]
    [reitit.frontend.controllers :as rfc]
    [mui-templates.views.sign-in :as sign-in]
+   [mui-templates.views.sign-in-site :as sign-in-site]
    [mui-templates.views.dashboard :as dashboard]))
 
 
@@ -66,12 +67,12 @@
        :stop  (log-fn "Leaving sign-in")}]}]
    ["sign-in-site"
     {:name      :routes/sign-in-site
-     :view dashboard/main
+     :view sign-in-site/main
      :link-text "Sign-in Site"
-     :icon dashboard/drawer-icon
+     :icon sign-in-site/drawer-icon
      :controllers
-     [{:start (log-fn "Entering products")
-       :stop  (log-fn "Leaving products")}]
+     [{:start (log-fn "Entering sign-in-site")
+       :stop  (log-fn "Leaving sign-in-site")}]
      }]
    ["sign-up"
     {:name      :routes/sign-up
@@ -79,8 +80,8 @@
      :link-text "Sign Up"
      :icon dashboard/drawer-icon
      :controllers
-     [{:start (log-fn "Entering watchdogs")
-       :stop  (log-fn "Leaving watchdogs")}]}]
+     [{:start (log-fn "Entering sign-up")
+       :stop  (log-fn "Leaving sign-up")}]}]
    ["album"
     {:name      :routes/album
      :view dashboard/main

@@ -28,37 +28,28 @@
 ;;; Subs
 
 (rf/reg-sub
- :dashboard/orders
- (fn [db]
-   (:dashboard/orders db)))
-
-(rf/reg-sub
- :dashboard/chart-data
- (fn [db]
-   (:dashboard/chart-data db)))
-
-(rf/reg-sub
- :login/errors
+ :sign-in/errors
  :<- [:errors]
  (fn [errors _]
-   (:login errors)))
+   (:sign-in errors)))
 
 ;;; Events
 
 (rf/reg-event-fx
- :login
+ :sign-in
  (fn-traced [{:keys [db]} [_ {:keys [userid password remember?]}]]
    (if (= password "top-secret")
      {:db (-> db
               (assoc-in [:auth :user-id] userid)
               (assoc-in [:auth :remember?] remember?))
       :navigate! [:routes/home]}
-     {:db (assoc-in db [:errors :login] {:password "Wrong Password! (should be \"top-secret\")"})})))
+     {:db (assoc-in db [:errors :sign-in]
+                    {:password "Wrong Password! (should be \"top-secret\")"})})))
 
 (rf/reg-event-db
  :clear-errors
  (fn-traced [db [_ field]]
-   (update-in db [:errors :login] dissoc field)))
+   (update-in db [:errors :sign-in] dissoc field)))
 
 
 ;; Components
@@ -75,21 +66,19 @@
 
 (defn sign-in [{:keys [classes] :as props}]
   (let [form (reagent/atom {:userid "" :password "" :remember? false})
-        errors (rf/subscribe [:login/errors])]
+        errors (rf/subscribe [:sign-in/errors])]
     (fn []
       [:> CssBaseline]
       [:div {:class (.-paper classes)}
        [:> Avatar {:class (.-avatar classes)}
         [:> LockOutlinedIcon]]
        [:> Typography {:component "h1" :variant "h5"}
-        "Sign in"
-        (when (:need-login? @errors)
-          " - Need to login first")]
+        "Sign in"]
        [:form {:class (.-form classes)
                :on-submit (fn [e]
                             (js/console.log e)
                             (.preventDefault e)
-                            (rf/dispatch [:login @form])
+                            (rf/dispatch [:sign-in @form])
                             (reset! form {:userid "" :password "" :remember? (:remember? @form)}))
                :no-validate true}
         [:> TextField {:variant      "outlined"
@@ -134,7 +123,7 @@
            "Forgot password?"]]
          [:> Grid {:item true}
           [:> Link {:href "#" :variant "body2"}
-           "Don't have an account?Sign Up"]]]]])))
+           "Don't have an account? Sign Up"]]]]])))
 
 (defn main [{:keys [classes]}]
   [:> Container {:component "main" :max-width "xs"}
