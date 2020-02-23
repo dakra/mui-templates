@@ -5,7 +5,8 @@
    [reitit.frontend]
    [reitit.frontend.easy :as rfe]
    [reitit.frontend.controllers :as rfc]
-   [mui-templates.views.dashboard :refer [dashboard]]))
+   [mui-templates.views.sign-in :as sign-in]
+   [mui-templates.views.dashboard :as dashboard]))
 
 
 (defn log-fn [& args]
@@ -45,62 +46,62 @@
 (def routes
   ["/"
    [""
-    {:name      ::home
-     :view dashboard
+    {:name      :routes/home
+     :view dashboard/main
      :link-text "Home"
-     :icon :home
+     :icon dashboard/drawer-icon
      :controllers
      [{;; Do whatever initialization needed for home page
-       ;; I.e (rf/dispatch [::events/load-something-with-ajax])
+       ;; I.e (rf/dispatch [:events/load-something-with-ajax])
        :start (log-fn "Entering home page")
        ;; Teardown can be done here.
        :stop  (log-fn "Leaving home page")}]}]
    ["sign-in"
-    {:name      ::sign-in
-     :view dashboard
+    {:name      :routes/sign-in
+     :view sign-in/main
      :link-text "Sign In"
-     :icon :dashboard
+     :icon sign-in/drawer-icon
      :controllers
-     [{:start (log-fn "Entering login")
-       :stop  (log-fn "Leaving login")}]}]
+     [{:start (log-fn "Entering sign-in")
+       :stop  (log-fn "Leaving sign-in")}]}]
    ["sign-in-site"
-    {:name      ::sign-in-site
-     :view dashboard
+    {:name      :routes/sign-in-site
+     :view dashboard/main
      :link-text "Sign-in Site"
-     :icon :shopping-cart
+     :icon dashboard/drawer-icon
      :controllers
      [{:start (log-fn "Entering products")
        :stop  (log-fn "Leaving products")}]
      }]
    ["sign-up"
-    {:name      ::sign-up
-     :view dashboard
+    {:name      :routes/sign-up
+     :view dashboard/main
      :link-text "Sign Up"
-     :icon :watch-later
+     :icon dashboard/drawer-icon
      :controllers
      [{:start (log-fn "Entering watchdogs")
        :stop  (log-fn "Leaving watchdogs")}]}]
    ["album"
-    {:name      ::album
-     :view dashboard
+    {:name      :routes/album
+     :view dashboard/main
      :link-text "Album"
-     :icon :settings
+     :icon dashboard/drawer-icon
      :controllers
      [{:start (log-fn "Entering settings")
        :stop  (log-fn "Leaving settings")}]}]
    ["pricing"
-    {:name      ::pricing
-     :view dashboard
+    {:name      :routes/pricing
+     :view dashboard/main
      :link-text "Pricing"
-     :icon :settings
+     :icon dashboard/drawer-icon
      :controllers
      [{:start (log-fn "Entering settings")
        :stop  (log-fn "Leaving settings")}]}]
    ["charts"
-    {:name      ::charts
-     :view dashboard
+    {:name      :routes/charts
+     :view dashboard/main
      :link-text "Charts"
-     :icon :settings
+     :icon dashboard/drawer-icon
      :controllers
      [{:start (log-fn "Entering settings")
        :stop  (log-fn "Leaving settings")}]}]])

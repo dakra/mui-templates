@@ -79,6 +79,10 @@
  (fn [db]
    db))
 
+(rf/reg-sub
+ :errors
+ (fn [db]
+   (:errors db)))
 
 ;;; Styles
 

@@ -3,39 +3,24 @@
    [reagent.core :as reagent]
    [reitit.frontend.easy :as rfe]
    [reitit.core :as reitit]
-   [reitit.frontend.easy :refer [href]]
    ["@material-ui/core" :as mui]
    ["@material-ui/core/AppBar" :default AppBar]
    ["@material-ui/core/Badge" :default Badge]
-   ["@material-ui/core/Box" :default Box]
-   ["@material-ui/core/Container" :default Container]
    ["@material-ui/core/CssBaseline" :default CssBaseline]
    ["@material-ui/core/Divider" :default Divider]
    ["@material-ui/core/Drawer" :default Drawer]
-   ["@material-ui/core/Grid" :default Grid]
    ["@material-ui/core/IconButton" :default IconButton]
-   ["@material-ui/core/Link" :default Link]
    ["@material-ui/core/List" :default List]
    ;; ["@material-ui/core/ListItem" :default ListItem]
    ["@material-ui/core/ListItemIcon" :default ListItemIcon]
    ["@material-ui/core/ListItemText" :default ListItemText]
    ["@material-ui/core/styles" :refer [withStyles]]
-   ["@material-ui/icons" :as icons]
    ["@material-ui/icons/Menu" :default MenuIcon]
    ["@material-ui/icons/ChevronLeft" :default ChevronLeftIcon]
    ["@material-ui/icons/Notifications" :default NotificationsIcon]
-   ["@material-ui/core/Paper" :default Paper]
    ["@material-ui/core/Toolbar" :default Toolbar]
    ["@material-ui/core/Typography" :default Typography]))
 
-(def icon-map
-  {:watch-later icons/WatchLater
-   :settings icons/Settings
-   :bar-chart icons/BarChart
-   :people icons/People
-   :shopping-cart icons/ShoppingCart
-   :dashboard icons/Dashboard
-   :home icons/Home})
 
 ;;; Styles
 
@@ -98,7 +83,7 @@
   [:> mui/ListItem {:button true
                     :selected selected
                     :on-click #(rfe/push-state route-name)}
-   [:> ListItemIcon [:> (get icon-map icon)]]
+   [:> ListItemIcon [icon]]
    [:> ListItemText {:primary text}]])
 
 
@@ -156,9 +141,7 @@
          [:main {:class (.-content classes)}
           [:div {:class (.-appBarSpacer classes)}]
           (when current-route
-            ;; [:> (with-dashboard-styles (reagent/reactify-component (-> current-route :data :view)))]
-            [(-> current-route :data :view) {:classes classes}])
-          ]]))))
+            [(-> current-route :data :view) {:classes classes}])]]))))
 
 (defn page [{:keys [router current-route]}]
   [:> (with-dashboard-styles

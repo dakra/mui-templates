@@ -4,9 +4,11 @@
    [re-frame.core :as rf]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    ["recharts" :as recharts]
+   ["@material-ui/icons" :as icons]
    ["@material-ui/core" :refer [Container Grid Paper] :as mui]))
 
 ;;; Subs
+
 (rf/reg-sub
  :dashboard/orders
  (fn [db]
@@ -29,6 +31,11 @@
                                             :let [time (:time d)
                                                   amount (rand-int 3000)]]
                                         {:time time :amount amount})))))
+
+;; Components
+
+(defn drawer-icon []
+  [:> icons/Home])
 
 (defn copyright []
   [:> mui/Typography {:variant "body2" :color "textSecondary" :align "center"}
@@ -104,7 +111,7 @@
                        :route-name route-name
                        :selected (= route-name (-> current-route :data :name))}])]]]))
 
-(defn dashboard [{:keys [classes]}]
+(defn main [{:keys [classes]}]
   [:> Container {:max-width "lg" :class (.-container classes)}
    [:> Grid {:container true :spacing 3}
     [:> Grid {:item true :xs 12 :md 8 :lg 9}
