@@ -9,7 +9,7 @@
  :builds {:app {:target :browser
                 :output-dir "public/js"
                 :asset-path "/js"
-                :module-hash-names true
+                :module-hash-names false
                 :modules {:app {:init-fn mui-templates.main/init!
                                 :preloads [devtools.preload
                                            day8.re-frame-10x.preload]}}
