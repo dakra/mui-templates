@@ -62,7 +62,8 @@
                           {:time "15:00" :amount 2000}
                           {:time "18:00" :amount 2400}
                           {:time "21:00" :amount 2400}
-                          {:time "24:00" :amount nil}]})
+                          {:time "24:00" :amount nil}]
+   :album/cards (range 1 10)})
 
 
 ;;; Events

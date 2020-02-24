@@ -47,7 +47,7 @@
                     {:password "Wrong Password! (should be \"top-secret\")"})})))
 
 (rf/reg-event-db
- :clear-errors
+ :sign-in/clear-errors
  (fn-traced [db [_ field]]
    (update-in db [:errors :sign-in] dissoc field)))
 
@@ -98,7 +98,7 @@
                        :helperText   (:password @errors)
                        :required     true
                        :fullWidth    true
-                       :on-focus     #(rf/dispatch [:clear-errors :password])
+                       :on-focus     #(rf/dispatch [:sign-in/clear-errors :password])
                        :on-change    #(swap! form assoc :password (-> % .-target .-value))
                        :value        (:password @form)
                        :id           "password"

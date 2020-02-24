@@ -7,6 +7,7 @@
    [reitit.frontend.controllers :as rfc]
    [mui-templates.views.sign-in :as sign-in]
    [mui-templates.views.sign-in-site :as sign-in-site]
+   [mui-templates.views.album :as album]
    [mui-templates.views.dashboard :as dashboard]))
 
 
@@ -84,12 +85,12 @@
        :stop  (log-fn "Leaving sign-up")}]}]
    ["album"
     {:name      :routes/album
-     :view dashboard/main
+     :view album/main
      :link-text "Album"
-     :icon dashboard/drawer-icon
+     :icon album/drawer-icon
      :controllers
-     [{:start (log-fn "Entering settings")
-       :stop  (log-fn "Leaving settings")}]}]
+     [{:start (log-fn "Entering album")
+       :stop  (log-fn "Leaving album")}]}]
    ["pricing"
     {:name      :routes/pricing
      :view dashboard/main
