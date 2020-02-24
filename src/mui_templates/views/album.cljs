@@ -51,7 +51,7 @@
     "Your Website"]
    (.getFullYear (js/Date.))])
 
-(defn card [classes c]
+(defn card [^js classes c]
   [:> Grid {:item true :xs 12 :sm 6 :md 4}
    [:> mui/Card {:class (.-card classes)}
     [:> mui/CardMedia {:class (.-cardMedia classes)
