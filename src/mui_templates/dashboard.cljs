@@ -16,6 +16,7 @@
    ["@material-ui/core/ListItemText" :default ListItemText]
    ["@material-ui/core/styles" :refer [withStyles]]
    ["@material-ui/icons/Menu" :default MenuIcon]
+   ["@material-ui/icons/GitHub" :default GitHubIcon]
    ["@material-ui/icons/ChevronLeft" :default ChevronLeftIcon]
    ["@material-ui/icons/Notifications" :default NotificationsIcon]
    ["@material-ui/core/Toolbar" :default Toolbar]
@@ -136,8 +137,11 @@
                          :route-name route-name
                          :selected (= route-name (-> current-route :data :name))}])]
           [:> Divider]
-          ;; [:> List (secondary-list-items)]
-          ]
+          [:> List
+           [:> mui/ListItem {:button true
+                             :on-click #(.open js/window "https://github.com/dakra/mui-templates")}
+            [:> ListItemIcon [:> GitHubIcon]]
+            [:> ListItemText {:primary "Source on GitHub"}]]]]
          [:main {:class (.-content classes)}
           [:div {:class (.-appBarSpacer classes)}]
           (when current-route
