@@ -7,7 +7,9 @@
    [reitit.frontend.controllers :as rfc]
    [mui-templates.views.sign-in :as sign-in]
    [mui-templates.views.sign-in-site :as sign-in-site]
+   [mui-templates.views.sign-up :as sign-up]
    [mui-templates.views.album :as album]
+   [mui-templates.views.pricing :as pricing]
    [mui-templates.views.dashboard :as dashboard]))
 
 
@@ -77,9 +79,9 @@
      }]
    ["sign-up"
     {:name      :routes/sign-up
-     :view dashboard/main
+     :view sign-up/main
      :link-text "Sign Up"
-     :icon dashboard/drawer-icon
+     :icon sign-up/drawer-icon
      :controllers
      [{:start (log-fn "Entering sign-up")
        :stop  (log-fn "Leaving sign-up")}]}]
@@ -93,20 +95,12 @@
        :stop  (log-fn "Leaving album")}]}]
    ["pricing"
     {:name      :routes/pricing
-     :view dashboard/main
+     :view pricing/main
      :link-text "Pricing"
-     :icon dashboard/drawer-icon
+     :icon pricing/drawer-icon
      :controllers
-     [{:start (log-fn "Entering settings")
-       :stop  (log-fn "Leaving settings")}]}]
-   ["charts"
-    {:name      :routes/charts
-     :view dashboard/main
-     :link-text "Charts"
-     :icon dashboard/drawer-icon
-     :controllers
-     [{:start (log-fn "Entering settings")
-       :stop  (log-fn "Leaving settings")}]}]])
+     [{:start (log-fn "Entering pricing")
+       :stop  (log-fn "Leaving pricing")}]}]])
 
 (def router
   (reitit.frontend/router
