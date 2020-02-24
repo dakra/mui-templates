@@ -28,11 +28,11 @@
     "Your Website"]
    (.getFullYear (js/Date.))])
 
-(defn pricing [{:keys [classes] :as props}]
+(defn pricing [{:keys [^js classes] :as props}]
   [:> Typography {:component "h1" :variant "h5"}
    "FIXME: Pricing"])
 
-(defn main [{:keys [classes]}]
+(defn main [{:keys [^js classes]}]
   [:> Container {:component "main" :max-width "xs"}
    [:> CssBaseline]
    [:> (with-pricing-styles (reagent/reactify-component pricing))]

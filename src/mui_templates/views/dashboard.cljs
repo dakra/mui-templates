@@ -45,7 +45,7 @@
    (.getFullYear (js/Date.))])
 
 
-(defn chart [{:keys [classes]}]
+(defn chart [{:keys [^js classes]}]
   (let [chart-data (rf/subscribe [:dashboard/chart-data])]
     [:<>
      [:> Grid {:justify "space-between" :container true}
@@ -67,7 +67,7 @@
        [:> recharts/Tooltip]]]]))
 
 
-(defn deposits [{:keys [classes]}]
+(defn deposits [{:keys [^js classes]}]
   [:<>
    [:> mui/Typography {:component "h2" :variant "h6" :color "primary" :gutter-bottom true}
     "Recent Deposits"]
@@ -87,7 +87,7 @@
    [:> mui/TableCell {:align "right"} amount]])
 
 
-(defn orders [{:keys [classes]}]
+(defn orders [{:keys [^js classes]}]
   (let [orders (rf/subscribe [:dashboard/orders])]
     [:<>
      [:> mui/Typography {:component "h2" :variant "h6" :color "primary" :gutter-bottom true}
@@ -111,7 +111,7 @@
                        :route-name route-name
                        :selected (= route-name (-> current-route :data :name))}])]]]))
 
-(defn main [{:keys [classes]}]
+(defn main [{:keys [^js classes]}]
   [:> Container {:max-width "lg" :class (.-container classes)}
    [:> Grid {:container true :spacing 3}
     [:> Grid {:item true :xs 12 :md 8 :lg 9}

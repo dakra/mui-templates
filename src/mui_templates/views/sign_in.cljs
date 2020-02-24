@@ -64,7 +64,7 @@
     "Your Website"]
    (.getFullYear (js/Date.))])
 
-(defn sign-in [{:keys [classes] :as props}]
+(defn sign-in [{:keys [^js classes] :as props}]
   (let [form (reagent/atom {:userid "" :password "" :remember? false})
         errors (rf/subscribe [:sign-in/errors])]
     (fn []
@@ -125,7 +125,7 @@
           [:> Link {:href "#" :variant "body2"}
            "Don't have an account? Sign Up"]]]]])))
 
-(defn main [{:keys [classes]}]
+(defn main [{:keys [^js classes]}]
   [:> Container {:component "main" :max-width "xs"}
    [:> CssBaseline]
    [:> (with-sign-in-styles (reagent/reactify-component sign-in))]

@@ -89,7 +89,7 @@
 
 (defn dashboard [{:keys [router current-route]}]
   (let [state (reagent/atom {:open true})]
-    (fn [{:keys [classes] :as props}]
+    (fn [{:keys [^js classes] :as props}]
       (let [open? (:open @state)]
         [:div {:class (.-root classes)}
          [:> CssBaseline]

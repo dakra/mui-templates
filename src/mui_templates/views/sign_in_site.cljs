@@ -75,7 +75,7 @@
     "Your Website"]
    (.getFullYear (js/Date.))])
 
-(defn sign-in [{:keys [classes] :as props}]
+(defn sign-in [{:keys [^js classes] :as props}]
   (let [form (reagent/atom {:userid "" :password "" :remember? false})
         errors (rf/subscribe [:sign-in-site/errors])]
     (fn []
@@ -142,5 +142,5 @@
           [:> Box {:mt 5}
            [copyright]]]]]])))
 
-(defn main [{:keys [classes]}]
+(defn main [{:keys [^js classes]}]
   [:> (with-sign-in-site-styles (reagent/reactify-component sign-in))])

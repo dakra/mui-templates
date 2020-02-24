@@ -68,7 +68,7 @@
      [:> Button {:size "small" :color "primary"}
       "Edit"]]]])
 
-(defn album [{:keys [classes] :as props}]
+(defn album [{:keys [^js classes] :as props}]
   (let [cards (rf/subscribe [:album/cards])]
     [:<>
      [:div {:class (.-heroContent classes)}
@@ -92,7 +92,7 @@
        (for [c @cards]
          ^{:key c} [card classes c])]]]))
 
-(defn main [{:keys [classes]}]
+(defn main [{:keys [^js classes]}]
   [:<>
    [:> (with-album-styles (reagent/reactify-component album))]
    [:> mui/Box {:pt 4}

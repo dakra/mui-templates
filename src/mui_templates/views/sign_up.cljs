@@ -60,11 +60,11 @@
     "Your Website"]
    (.getFullYear (js/Date.))])
 
-(defn sign-up [{:keys [classes] :as props}]
+(defn sign-up [{:keys [^js classes] :as props}]
   [:> Typography {:component "h1" :variant "h5"}
    "FIXME: Sign up"])
 
-(defn main [{:keys [classes]}]
+(defn main [{:keys [^js classes]}]
   [:> Container {:component "main" :max-width "xs"}
    [:> CssBaseline]
    [:> (with-sign-up-styles (reagent/reactify-component sign-up))]
