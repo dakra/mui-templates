@@ -2,12 +2,8 @@
   (:require
    [reagent.core :as reagent]
    [re-frame.core :as rf]
-   ;; ["@material-ui/core/colors/purple" :refer [purple]]
-   ;; ["@material-ui/core/colors/green" :refer [green]]
-   ["@material-ui/core" :refer [Typography Container Button Grid Icon Slider Paper ThemeProvider createMuiTheme
-                                makeStyles Input Switch FormGroup FormControlLabel]]
-   ;; [re-com.core :as rc]
-   [day8.re-frame.tracing :refer-macros [fn-traced defn-traced]]
+   [day8.re-frame.tracing :refer-macros [fn-traced]]
+   ["@material-ui/core" :refer [ThemeProvider createMuiTheme]]
    [mui-templates.routes :as routes]
    [mui-templates.dashboard :as dashboard]))
 

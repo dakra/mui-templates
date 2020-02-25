@@ -7,11 +7,10 @@
    [mui-templates.components :refer [copyright]]
    ["@material-ui/core/CssBaseline" :default CssBaseline]
    ["@material-ui/core" :refer [Avatar Button TextField FormControlLabel
-                                Checkbox Link Grid Box Typography Container]]
+                                Checkbox Link Grid Box Typography Paper]]
    ["@material-ui/core/styles" :refer [withStyles]]
    ["@material-ui/icons/Lock" :default LockIcon]
-   ["@material-ui/icons/LockOutlined" :default LockOutlinedIcon]
-   ["@material-ui/core" :as mui]))
+   ["@material-ui/icons/LockOutlined" :default LockOutlinedIcon]))
 
 ;;; Styles
 
@@ -78,7 +77,7 @@
        [:> CssBaseline]
        [:> Grid {:item true :xs false :sm 4 :md 7 :class (.-image classes)}]
        [:> Grid {:item true :xs 12    :sm 8 :md 5
-                 :component mui/Paper :elevation 6 :square true}
+                 :component Paper :elevation 6 :square true}
         [:div {:class (.-paper classes)}
          [:> Avatar {:class (.-avatar classes)}
           [:> LockOutlinedIcon]]

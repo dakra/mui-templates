@@ -1,16 +1,11 @@
 (ns mui-templates.views.album
   (:require
-   [goog.object :as gobj]
    [reagent.core :as reagent]
    [re-frame.core :as rf]
-   [day8.re-frame.tracing :refer-macros [fn-traced]]
    [mui-templates.components :refer [copyright]]
-   ["@material-ui/core/CssBaseline" :default CssBaseline]
-   ["@material-ui/core" :refer [Avatar Button TextField FormControlLabel
-                                Checkbox Link Grid Box Typography Container]]
+   ["@material-ui/core" :refer [Button Box Grid Typography Container] :as mui]
    ["@material-ui/core/styles" :refer [withStyles]]
-   ["@material-ui/icons/PhotoAlbum" :default PhotoAlbumIcon]
-   ["@material-ui/core" :as mui]))
+   ["@material-ui/icons/PhotoAlbum" :default PhotoAlbumIcon]))
 
 ;;; Styles
 
@@ -74,7 +69,7 @@
         "Album layout"]
        [:> Typography {:variant "h5" :align "center" :color "textSecondary" :paragraph true}
         "Something short and leading about the collection below—its contents, the creator, etc.
- Make it short and sweet, but not too short so folks don&apos;t simply skip over it entirely."]
+         Make it short and sweet, but not too short so folks don't simply skip over it entirely."]
        [:div {:class (.-heroButtons classes)}
         [:> Grid {:container true :spacing 2 :justify "center"}
          [:> Grid {:item true}
@@ -91,5 +86,5 @@
 (defn main [{:keys [^js classes]}]
   [:<>
    [:> (with-album-styles (reagent/reactify-component album))]
-   [:> mui/Box {:pt 4}
+   [:> Box {:pt 4}
     [copyright]]])

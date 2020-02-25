@@ -11,7 +11,7 @@
    ["@material-ui/core/Drawer" :default Drawer]
    ["@material-ui/core/IconButton" :default IconButton]
    ["@material-ui/core/List" :default List]
-   ;; ["@material-ui/core/ListItem" :default ListItem]
+   ["@material-ui/core/ListItem" :default ListItem]
    ["@material-ui/core/ListItemIcon" :default ListItemIcon]
    ["@material-ui/core/ListItemText" :default ListItemText]
    ["@material-ui/core/styles" :refer [withStyles]]
@@ -81,9 +81,9 @@
 ;;; Components
 
 (defn list-item [{:keys [selected route-name text icon]}]
-  [:> mui/ListItem {:button true
-                    :selected selected
-                    :on-click #(rfe/push-state route-name)}
+  [:> ListItem {:button true
+                :selected selected
+                :on-click #(rfe/push-state route-name)}
    [:> ListItemIcon [icon]]
    [:> ListItemText {:primary text}]])
 
@@ -102,7 +102,7 @@
            [:> IconButton {:edge "start"
                            :color "inherit"
                            :aria-label "open drawer"
-                           :on-click (fn [e] (swap! state assoc :open true))  ; Open drawer
+                           :on-click #(swap! state assoc :open true)  ; Open drawer
                            :class [(.-menuButton classes) (when open? (.-menuButtonHidden classes))]}
             [:> MenuIcon]]
            [:> Typography {:component "h1"
@@ -127,15 +127,12 @@
            (for [route-name (reitit/route-names router)
                  :let [route (reitit/match-by-name router route-name)
                        text (-> route :data :link-text)
-                       icon (-> route :data :icon)]]
-             #_(reagent/as-component [:> mui/ListItem {:button true}
-                                      [:> ListItemIcon [:> InboxIcon]]
-                                      [:> ListItemText {:primary text}]])
-             ^{:key route-name}
-             [list-item {:text text
-                         :icon icon
-                         :route-name route-name
-                         :selected (= route-name (-> current-route :data :name))}])]
+                       icon (-> route :data :icon)
+                       selected? (= route-name (-> current-route :data :name))]]
+             ^{:key route-name} [list-item {:text text
+                                            :icon icon
+                                            :route-name route-name
+                                            :selected selected?}])]
           [:> Divider]
           [:> List
            [:> mui/ListItem {:button true

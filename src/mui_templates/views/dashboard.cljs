@@ -1,8 +1,6 @@
 (ns mui-templates.views.dashboard
   (:require
-   [reagent.core :as reagent]
    [re-frame.core :as rf]
-   [day8.re-frame.tracing :refer-macros [fn-traced]]
    [mui-templates.components :refer [copyright]]
    ["recharts" :as recharts]
    ["@material-ui/icons" :as icons]
