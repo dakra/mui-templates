@@ -3,6 +3,7 @@
    [reagent.core :as reagent]
    [re-frame.core :as rf]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
+   [mui-templates.components :refer [copyright]]
    ["recharts" :as recharts]
    ["@material-ui/icons" :as icons]
    ["@material-ui/core" :refer [Container Grid Paper] :as mui]))
@@ -36,13 +37,6 @@
 
 (defn drawer-icon []
   [:> icons/Home])
-
-(defn copyright []
-  [:> mui/Typography {:variant "body2" :color "textSecondary" :align "center"}
-   "Copyright ©"
-   [:> mui/Link {:color "inherit" :href "https://material-ui.com"}
-    "Your Website"]
-   (.getFullYear (js/Date.))])
 
 
 (defn chart [{:keys [^js classes]}]

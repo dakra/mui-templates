@@ -3,6 +3,7 @@
    [reagent.core :as reagent]
    [re-frame.core :as rf]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
+   [mui-templates.components :refer [copyright]]
    ["@material-ui/core/CssBaseline" :default CssBaseline]
    ["@material-ui/core" :refer [Avatar Button TextField FormControlLabel
                                 Checkbox Link Grid Box Typography Container]]
@@ -56,13 +57,6 @@
 
 (defn drawer-icon []
   [:> LockOutlinedIcon])
-
-(defn copyright []
-  [:> Typography {:variant "body2" :color "textSecondary" :align "center"}
-   "Copyright ©"
-   [:> Link {:color "inherit" :href "https://material-ui.com"}
-    "Your Website"]
-   (.getFullYear (js/Date.))])
 
 (defn sign-in [{:keys [^js classes] :as props}]
   (let [form (reagent/atom {:userid "" :password "" :remember? false})

@@ -3,6 +3,7 @@
    [goog.object :as gobj]
    [re-frame.core :as rf]
    [reagent.core :as reagent]
+   [mui-templates.components :refer [copyright]]
    ["@material-ui/core/CssBaseline" :default CssBaseline]
    ["@material-ui/core" :refer [Link Box Button Typography Container Grid] :as mui]
    ["@material-ui/core/styles" :refer [withStyles]]
@@ -53,12 +54,6 @@
 (defn drawer-icon []
   [:> EuroSymbolIcon])
 
-(defn copyright []
-  [:> Typography {:variant "body2" :color "textSecondary" :align "center"}
-   "Copyright ©"
-   [:> Link {:color "inherit" :href "https://material-ui.com"}
-    "Your Website"]
-   (.getFullYear (js/Date.))])
 
 (defn hero-unit [{:keys [^js classes] :as props}]
   [:> Container {:maxWidth "sm" :component "main" :class (.-heroContent classes)}

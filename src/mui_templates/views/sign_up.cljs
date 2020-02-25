@@ -1,15 +1,16 @@
 (ns mui-templates.views.sign-up
   (:require
+   [clojure.string :as str]
    [reagent.core :as reagent]
    [re-frame.core :as rf]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
+   [mui-templates.components :refer [copyright]]
    ["@material-ui/core/CssBaseline" :default CssBaseline]
    ["@material-ui/core" :refer [Link Box Typography Container Grid Avatar TextField
                                 FormControlLabel Checkbox Button]]
    ["@material-ui/core/styles" :refer [withStyles]]
    ["@material-ui/icons/LockOutlined" :default LockOutlinedIcon]
-   ["@material-ui/icons/VpnKey" :default VpnKeyIcon]
-   [clojure.string :as str]))
+   ["@material-ui/icons/VpnKey" :default VpnKeyIcon]))
 
 ;;; Styles
 
@@ -57,12 +58,6 @@
 (defn drawer-icon []
   [:> VpnKeyIcon])
 
-(defn copyright []
-  [:> Typography {:variant "body2" :color "textSecondary" :align "center"}
-   "Copyright ©"
-   [:> Link {:color "inherit" :href "https://material-ui.com"}
-    "Your Website"]
-   (.getFullYear (js/Date.))])
 
 (defn sign-up [{:keys [^js classes] :as props}]
   (let [empty-form {:first-name "" :last-name "" :email "" :password "" :marketing-emails? false}
