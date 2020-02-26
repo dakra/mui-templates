@@ -20,7 +20,8 @@
 ;;; DB
 
 (def default-db
-  {:dashboard/orders [{:id 0
+  {:drawer/open? true
+   :dashboard/orders [{:id 0
                        :date "16 Mar, 2019"
                        :name "Elvis Presley"
                        :ship-to "Tupelo, MS"

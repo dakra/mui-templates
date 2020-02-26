@@ -1,6 +1,7 @@
 (ns mui-templates.dashboard
   (:require
    [reagent.core :as reagent]
+   [re-frame.core :as rf]
    [reitit.frontend.easy :as rfe]
    [reitit.core :as reitit]
    ["@material-ui/core" :as mui]
@@ -78,6 +79,28 @@
 
 (def with-dashboard-styles (withStyles dashboard-styles))
 
+
+;;; Subs
+
+(rf/reg-sub
+ :drawer/open?
+ (fn [db]
+   (:drawer/open? db)))
+
+
+;;; Events
+
+(rf/reg-event-db
+ :drawer/open
+ (fn [db _]
+   (assoc db :drawer/open? true)))
+
+(rf/reg-event-db
+ :drawer/close
+ (fn [db _]
+   (assoc db :drawer/open? false)))
+
+
 ;;; Components
 
 (defn list-item [{:keys [selected route-name text icon]}]
@@ -89,60 +112,59 @@
 
 
 (defn dashboard [{:keys [router current-route]}]
-  (let [state (reagent/atom {:open true})]
-    (fn [{:keys [^js classes] :as props}]
-      (let [open? (:open @state)]
-        [:div {:class (.-root classes)}
-         [:> CssBaseline]
+  (fn [{:keys [^js classes] :as props}]
+    (let [open? @(rf/subscribe [:drawer/open?])]
+      [:div {:class (.-root classes)}
+       [:> CssBaseline]
 
-         [:> AppBar {:position "absolute"
-                     :class [(.-appBar classes)
-                             (when open? (.-appBarShift classes))]}
-          [:> Toolbar {:class (.-toolbar classes)}
-           [:> IconButton {:edge "start"
-                           :color "inherit"
-                           :aria-label "open drawer"
-                           :on-click #(swap! state assoc :open true)  ; Open drawer
-                           :class [(.-menuButton classes) (when open? (.-menuButtonHidden classes))]}
-            [:> MenuIcon]]
-           [:> Typography {:component "h1"
-                           :variant "h6"
-                           :color "inherit"
-                           :no-wrap true
-                           :class (.-title classes)}
-            "Dashboard"]
-           [:> IconButton {:color "inherit"}
-            [:> Badge {:badgeContent 4 :color "secondary"}
-             [:> NotificationsIcon]]]]]
+       [:> AppBar {:position "absolute"
+                   :class [(.-appBar classes)
+                           (when open? (.-appBarShift classes))]}
+        [:> Toolbar {:class (.-toolbar classes)}
+         [:> IconButton {:edge "start"
+                         :color "inherit"
+                         :aria-label "open drawer"
+                         :on-click #(rf/dispatch [:drawer/open])  ; Open drawer
+                         :class [(.-menuButton classes) (when open? (.-menuButtonHidden classes))]}
+          [:> MenuIcon]]
+         [:> Typography {:component "h1"
+                         :variant "h6"
+                         :color "inherit"
+                         :no-wrap true
+                         :class (.-title classes)}
+          "Dashboard"]
+         [:> IconButton {:color "inherit"}
+          [:> Badge {:badgeContent 4 :color "secondary"}
+           [:> NotificationsIcon]]]]]
 
-         [:> Drawer {:variant "permanent"
-                     :classes {:paper (str (.-drawerPaper classes) " "
-                                           (if open? "" (.-drawerPaperClose classes)))}
-                     :open open?}
-          [:div {:class (.-toolbarIcon classes)}
-           [:> IconButton {:on-click #(swap! state assoc :open false)}  ; Close drawer
-            [:> ChevronLeftIcon]]]
-          [:> Divider]
-          [:> List
-           (for [route-name (reitit/route-names router)
-                 :let [route (reitit/match-by-name router route-name)
-                       text (-> route :data :link-text)
-                       icon (-> route :data :icon)
-                       selected? (= route-name (-> current-route :data :name))]]
-             ^{:key route-name} [list-item {:text text
-                                            :icon icon
-                                            :route-name route-name
-                                            :selected selected?}])]
-          [:> Divider]
-          [:> List
-           [:> mui/ListItem {:button true
-                             :on-click #(.open js/window "https://github.com/dakra/mui-templates")}
-            [:> ListItemIcon [:> GitHubIcon]]
-            [:> ListItemText {:primary "Source on GitHub"}]]]]
-         [:main {:class (.-content classes)}
-          [:div {:class (.-appBarSpacer classes)}]
-          (when current-route
-            [(-> current-route :data :view) {:classes classes}])]]))))
+       [:> Drawer {:variant "permanent"
+                   :classes {:paper (str (.-drawerPaper classes) " "
+                                         (if open? "" (.-drawerPaperClose classes)))}
+                   :open open?}
+        [:div {:class (.-toolbarIcon classes)}
+         [:> IconButton {:on-click #(rf/dispatch [:drawer/close])}  ; Close drawer
+          [:> ChevronLeftIcon]]]
+        [:> Divider]
+        [:> List
+         (for [route-name (reitit/route-names router)
+               :let [route (reitit/match-by-name router route-name)
+                     text (-> route :data :link-text)
+                     icon (-> route :data :icon)
+                     selected? (= route-name (-> current-route :data :name))]]
+           ^{:key route-name} [list-item {:text text
+                                          :icon icon
+                                          :route-name route-name
+                                          :selected selected?}])]
+        [:> Divider]
+        [:> List
+         [:> mui/ListItem {:button true
+                           :on-click #(.open js/window "https://github.com/dakra/mui-templates")}
+          [:> ListItemIcon [:> GitHubIcon]]
+          [:> ListItemText {:primary "Source on GitHub"}]]]]
+       [:main {:class (.-content classes)}
+        [:div {:class (.-appBarSpacer classes)}]
+        (when current-route
+          [(-> current-route :data :view) {:classes classes}])]])))
 
 (defn page [{:keys [router current-route]}]
   [:> (with-dashboard-styles
