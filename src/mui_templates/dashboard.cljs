@@ -4,9 +4,9 @@
    [re-frame.core :as rf]
    [reitit.frontend.easy :as rfe]
    [reitit.core :as reitit]
-   ["@material-ui/core" :as mui]
    ["@material-ui/core/AppBar" :default AppBar]
    ["@material-ui/core/Badge" :default Badge]
+   ["@material-ui/core/Switch" :default Switch]
    ["@material-ui/core/CssBaseline" :default CssBaseline]
    ["@material-ui/core/Divider" :default Divider]
    ["@material-ui/core/Drawer" :default Drawer]
@@ -113,7 +113,8 @@
 
 (defn dashboard [{:keys [router current-route]}]
   (fn [{:keys [^js classes] :as props}]
-    (let [open? @(rf/subscribe [:drawer/open?])]
+    (let [open? @(rf/subscribe [:drawer/open?])
+          dark-theme? @(rf/subscribe [:dark-theme?])]
       [:div {:class (.-root classes)}
        [:> CssBaseline]
 
@@ -157,8 +158,12 @@
                                           :selected selected?}])]
         [:> Divider]
         [:> List
-         [:> mui/ListItem {:button true
-                           :on-click #(.open js/window "https://github.com/dakra/mui-templates")}
+         [:> ListItem {:button true
+                       :on-click #(rf/dispatch [:toggle-dark-theme])}
+          [:> ListItemIcon [:> Switch {:size "small" :checked dark-theme?}]]
+          [:> ListItemText {:primary "Toggle Theme"}]]
+         [:> ListItem {:button true
+                       :on-click #(.open js/window "https://github.com/dakra/mui-templates")}
           [:> ListItemIcon [:> GitHubIcon]]
           [:> ListItemText {:primary "Source on GitHub"}]]]]
        [:main {:class (.-content classes)}

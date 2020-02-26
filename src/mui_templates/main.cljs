@@ -20,7 +20,8 @@
 ;;; DB
 
 (def default-db
-  {:drawer/open? true
+  {:dark-theme? false
+   :drawer/open? true
    :dashboard/orders [{:id 0
                        :date "16 Mar, 2019"
                        :name "Elvis Presley"
@@ -104,6 +105,11 @@
  (fn-traced [_ _]
    default-db))
 
+(rf/reg-event-db
+ :toggle-dark-theme
+ (fn-traced [db _]
+   (update db :dark-theme? not)))
+
 ;;; Subs
 
 (rf/reg-sub
@@ -112,20 +118,27 @@
    db))
 
 (rf/reg-sub
+ :dark-theme?
+ (fn [db]
+   (:dark-theme? db)))
+
+(rf/reg-sub
  :errors
  (fn [db]
    (:errors db)))
 
 ;;; Styles
 
-(def custom-theme (createMuiTheme (clj->js {:palette {:type "light"}
-                                            :status {:danger "red"}})))
+(defn custom-theme [dark-theme?]
+  (createMuiTheme (clj->js {:palette {:type (if dark-theme? "dark" "light")}
+                            :status {:danger "red"}})))
 
 ;;; Views
 
 (defn main-shell [{:keys [router]}]
-  (let [current-route @(rf/subscribe [:current-route])]
-    [:> ThemeProvider {:theme custom-theme}
+  (let [current-route @(rf/subscribe [:current-route])
+        dark-theme? @(rf/subscribe [:dark-theme?])]
+    [:> ThemeProvider {:theme (custom-theme dark-theme?)}
      [dashboard/page {:router router :current-route current-route}]]))
 
 ;;; Core
