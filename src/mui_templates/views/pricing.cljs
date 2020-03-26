@@ -72,7 +72,7 @@
                         :subheader (:subheader tier)
                         :titleTypographyProps {:align "center"}
                         :subheaderTypographyProps {:align "center"}
-                        :action (when (= title "Pro") (reagent/as-component [:> StarIcon]))
+                        :action (when (= title "Pro") (reagent/as-element [:> StarIcon]))
                         :class (.-cardHeader classes)}]
     [:> mui/CardContent
      [:div {:class (.-cardPricing classes)}
@@ -82,7 +82,7 @@
        "/mo"]]
      [:ul
       (for [line description]
-        (reagent/as-component
+        (reagent/as-element
          [:> Typography {:component "li" :variant "subtitle1" :align "center" :key line}
           line]))]]
     [:> mui/CardActions
@@ -101,7 +101,7 @@
     [:> Container {:maxWidth "md" :component "footer" :class (.-footer classes)}
      [:> Grid {:container true :spacing 4 :justify "space-evenly"}
       (for [{:keys [title description]} @footers]
-        (reagent/as-component
+        (reagent/as-element
          [:> Grid {:item true :xs 6 :sm 3 :key title}
           [:> Typography {:variant "h6" :color "textPrimary" :gutterBottom true}
            title]

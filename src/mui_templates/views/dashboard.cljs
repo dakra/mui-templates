@@ -95,9 +95,9 @@
       [:> mui/TableBody
        (for [order @orders]
          ^{:key (:id order)} [table-row order]
-         #_(reagent/as-component [:> mui/ListItem {:button true}
-                                  [:> ListItemIcon [:> InboxIcon]]
-                                  [:> ListItemText {:primary text}]])
+         #_(reagent/as-element [:> mui/ListItem {:button true}
+                                [:> ListItemIcon [:> InboxIcon]]
+                                [:> ListItemText {:primary text}]])
          #_[list-item {:text text
                        :icon icon
                        :route-name route-name

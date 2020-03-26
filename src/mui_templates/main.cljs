@@ -1,6 +1,6 @@
 (ns mui-templates.main
   (:require
-   [reagent.core :as reagent]
+   [reagent.dom :as rdom]
    [re-frame.core :as rf]
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    ["@material-ui/core" :refer [ThemeProvider createMuiTheme]]
@@ -146,8 +146,8 @@
 (defn ^:dev/after-load mount-root []
   (rf/clear-subscription-cache!)
   (routes/init-routes!)
-  (reagent/render [main-shell {:router routes/router}]
-                  (.getElementById js/document "app")))
+  (rdom/render [main-shell {:router routes/router}]
+               (.getElementById js/document "app")))
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])

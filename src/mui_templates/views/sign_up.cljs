@@ -128,7 +128,7 @@
                          :on-focus     #(rf/dispatch [:sign-up/clear-errors :password])
                          :on-change    #(swap! form assoc :password (-> % .-target .-value))}]]
          [:> FormControlLabel
-          {:control (reagent/as-component
+          {:control (reagent/as-element
                      [:> Checkbox {:checked (:marketing-emails? @form)
                                    :on-change #(swap! form assoc :marketing-emails? (-> % .-target .-checked))
                                    :color "primary"}])

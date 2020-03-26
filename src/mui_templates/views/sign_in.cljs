@@ -100,7 +100,7 @@
                        :name         "password"
                        :autoComplete "current-password"}]
         [:> FormControlLabel
-         {:control (reagent/as-component
+         {:control (reagent/as-element
                     [:> Checkbox {:checked (:remember? @form)
                                   :on-change #(swap! form assoc :remember? (-> % .-target .-checked))
                                   :color "primary"}])
