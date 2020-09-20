@@ -10,7 +10,8 @@
    [mui-templates.views.sign-up :as sign-up]
    [mui-templates.views.album :as album]
    [mui-templates.views.pricing :as pricing]
-   [mui-templates.views.dashboard :as dashboard]))
+   [mui-templates.views.dashboard :as dashboard]
+   [mui-templates.views.components :as components]))
 
 
 (defn log-fn [& args]
@@ -100,7 +101,15 @@
      :icon pricing/drawer-icon
      :controllers
      [{:start (log-fn "Entering pricing")
-       :stop  (log-fn "Leaving pricing")}]}]])
+       :stop  (log-fn "Leaving pricing")}]}]
+   ["components"
+    {:name      :routes/components
+     :view components/main
+     :link-text "Components"
+     :icon components/drawer-icon
+     :controllers
+     [{:start (log-fn "Entering components")
+       :stop  (log-fn "Leaving components")}]}]])
 
 (def router
   (reitit.frontend/router
